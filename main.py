@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:beproductive@localhost:8889/build-a-blog'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:Cobe@localhost:8889/build-a-blog'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
@@ -31,7 +31,7 @@ def index():
                 tit_err = 'Error: Your blog was empty!'
             if blog_body == '':
                 blog_err = 'Error: Your blog was empty!'
-            return render_template('blog.html', title='Build a  blog', body = blog_body, tit_err=tit_err, blog_err=blog_err, btitle=title_name )
+            return render_template('blog.html', title='Build a  blog', body=blog_body, tit_err=tit_err, blog_err=blog_err, btitle=title_name )
         else:
             new_blogb = Blog(title_name, blog_body)
             db.session.add(new_blogb)
@@ -41,7 +41,7 @@ def index():
     else:
         return render_template('blog.html')
 
-@app.route('/blogs')
+@app.route('/blog')
 def display_blogs():
 
     blogs = Blog.query.all()
@@ -53,7 +53,6 @@ def display_blog():
     blog_id = request.args.get('id')
     blog = Blog.query.get(blog_id)
     return render_template('post.html', title = "Blogs!", blog = blog)
-
 
 @app.route('/deletarate', methods=['POST'])
 def deletarate():
